@@ -33,10 +33,24 @@ cacheSolve <- function(x, ...) {
       message("getting cached data")
       return(inv)
     }
+    
   # get stored matrix
-    data <- x$get()
+    dataMat <- x$get()
+    
+  # check if it'S a square matrix
+    if(nrow(dataMat)!= ncol(dataMat)){
+      message("this is not a square matrix")
+      return(NULL)
+    }
+    
+  # check if matrix has a determinant!= 0
+    if(det(dataMat) == 0){
+      message("not an invertible matrix")
+      return(NULL)
+    }
+    
   # compute the inverse and store it in object
-    inv <- solve(data, ...)
+    inv <- solve(dataMat, ...)
     x$setinv(inv)
     inv
   }
